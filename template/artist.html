@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <title>Artist {{ .Artist.Name}}</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+
+</head>
+<body>
+    <main class="artist-page">
+
+        <!-- HERO SECTION -->
+        <section class="artist-hero">
+            <div class="artist-image">
+                <img src="{{ .Artist.Image }}" alt="{{ .Artist.Name }}">
+            </div>
+            <div class="artist-intro">
+                <h1>{{ .Artist.Name }}</h1>
+                <p class="artist-meta">
+                    Formed in <strong>{{ .Artist.CreationDate }}</strong> ·
+                    First album: <strong>{{ .Artist.FirstAlbum }}</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- INFO GRID -->
+        <section class="artist-info">
+
+            <!-- MEMBERS -->
+            <div class="info-card">
+                <h2>Members</h2>
+                <ul class="members-list">
+                    {{ range .Artist.Members }}
+                        <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+
+            <!-- LOCATIONS -->
+            <div class="info-card">
+                <h2>Tour Locations</h2>
+                {{ range .Locations.Locations }}
+                    <div class="members-list">
+                        <li>{{ . }}</li>
+                    </div>
+                {{ end }}
+            </div>
+
+            <!-- CONCERT DATES -->
+           <div class="info-card">
+                <h2>Concert Dates</h2>
+                <ul class="members-list">
+                    {{ range .Dates.Dates }}
+                        <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+
+            <!-- RELATIONS -->
+          <div class="info-card">
+            <h2>Concert Relations</h2>
+
+            <div class="relations-list">
+                {{ range $location, $dates := .Relation.DatesLocations }}
+                    <div class="members-list">
+                        <li>{{ $location }}</li>
+                        <ul>
+                            {{ range $dates }}
+                                <li>{{ . }}</li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                {{ end }}
+            </div>
+        </div>
+
+
+        </section>
+
+    </main>
+</body>
+
+</html>

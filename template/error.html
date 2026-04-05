@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error {{.StatusError}}</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+    <link rel="stylesheet" href="/assets/styles.css">
+
+</head>
+<body>
+    <div class="error-page">
+         <div class="error-container">
+            <div class="error-code">{{.StatusError}}</div>
+            <div class="error-title">{{.Title}}</div>
+
+            <div class="divider"></div>
+
+            <div class="error-message">
+                {{.ErrorMsg}}
+            </div>
+
+            <a href="/" class="home-btn">Go Home</a>
+        </div>
+
+    </div>
+   
+
+</body>
+</html>

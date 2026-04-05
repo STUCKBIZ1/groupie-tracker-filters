@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupie tracker</title>
+
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+</head>
+<body>
+   
+    <header>
+        <div class="logo">
+            LOGO
+        </div>
+        <div class="main-title">
+            Groupie tracker
+        </div>
+    </header>
+
+    <main>
+        <section class="filters">
+            <form action="/" method="GET" class="filter-form">
+                <div class="filter-group">
+                    <label for="search">Search by name or location</label>
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        placeholder="Artist name or location"
+                        value="{{.Filters.Search}}"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <label for="first-album">First album date</label>
+                    <input
+                        type="date"
+                        id="first-album"
+                        name="first_album"
+                        value="{{.Filters.FirstAlbum}}"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <div class="creation-year-header">
+                        <label for="creation-year">Creation year</label>
+                        <output class="range-value" id="creation-year-value">{{if .Filters.CreationYear}}{{.Filters.CreationYear}}{{else}}1960{{end}}</output>
+                    </div>
+                    <input
+                        type="range"
+                        id="creation-year"
+                        name="creation_year"
+                        min="1950"
+                        max="2026"
+                        value="{{if .Filters.CreationYear}}{{.Filters.CreationYear}}{{else}}1960{{end}}"
+                        oninput="document.getElementById('creation-year-value').value = this.value"
+                    >
+                </div>
+
+                <fieldset class="filter-group">
+                    <legend>Number of members</legend>
+                    <label>
+                        <input type="radio" name="members" value="1" {{if eq .Filters.Members "1"}}checked{{end}}>
+                        1
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="2" {{if eq .Filters.Members "2"}}checked{{end}}>
+                        2
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="3" {{if eq .Filters.Members "3"}}checked{{end}}>
+                        3
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="4" {{if eq .Filters.Members "4"}}checked{{end}}>
+                        4
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="5" {{if eq .Filters.Members "5"}}checked{{end}}>
+                        5
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="6" {{if eq .Filters.Members "6"}}checked{{end}}>
+                        6
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="7" {{if eq .Filters.Members "7"}}checked{{end}}>
+                        7
+                    </label>
+                    <label>
+                        <input type="radio" name="members" value="8" {{if eq .Filters.Members "8"}}checked{{end}}>
+                        8+
+                    </label>
+                </fieldset>
+
+                <div class="filter-actions">
+                    <button type="submit">Filter</button>
+                    <a href="/">Reset</a>
+                </div>
+            </form>
+        </section>
+
+        <div class="container">
+            {{range .Artists}}
+                <a href="/artist?id={{.ID}}">
+                    <div class="card">
+                        <div class="card-header">
+                            <img src="{{.Image}}" alt="">
+                        </div>
+                        <div class="card-body">
+                            <p> <span>{{.ID}}</span>{{.Name}}</p>
+
+
+                        </div>
+                    </div>
+                </a>
+            {{end}}
+        </div>
+    </main>
+
+    <footer>   
+
+
+    </footer>
+
+</body>
+</html>
