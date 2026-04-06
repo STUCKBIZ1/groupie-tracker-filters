@@ -1,6 +1,56 @@
 /* =========================================================
    ROOT VARIABLES (DESIGN SYSTEM)
 ========================================================= */
+/* =========================================================
+   SEARCH BAR ADDITIONS — append to assets/styles.css
+========================================================= */
+
+/* Make the search group span full width in the filter grid */
+.search-group {
+    grid-column: 1 / -1;
+}
+
+/* Wrapper for icon + input */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Magnifier icon */
+.search-icon {
+    position: absolute;
+    left: 16px;
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Override the generic input style for the search field */
+.search-input-wrapper input[type="text"] {
+    width: 100%;
+    padding: 14px 16px 14px 46px; /* left padding makes room for icon */
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-input-wrapper input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.search-input-wrapper input[type="text"]:focus {
+    border-color: rgba(94, 234, 212, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(94, 234, 212, 0.1);
+}
+
 :root {
     --bg-main: #0a0a0a;
     --bg-soft: rgba(255, 255, 255, 0.06);

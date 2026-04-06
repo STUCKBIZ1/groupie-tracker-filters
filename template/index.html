@@ -4,36 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Groupie tracker</title>
-
     <link rel="stylesheet" href="/assets/styles.css">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-
 </head>
 <body>
-   
+
     <header>
-        <div class="logo">
-            LOGO
-        </div>
-        <div class="main-title">
-            Groupie tracker
-        </div>
+        <div class="logo">LOGO</div>
+        <div class="main-title">Groupie tracker</div>
     </header>
 
     <main>
         <section class="filters">
             <form action="/" method="GET" class="filter-form">
-                <div class="filter-group">
-                    <label for="search">Search by name or location</label>
-                    <input
-                        type="text"
-                        id="search"
-                        name="search"
-                        placeholder="Artist name or location"
-                        value="{{.Filters.Search}}"
-                    >
+
+                <!-- SEARCH WITH DATALIST SUGGESTIONS -->
+                <div class="filter-group search-group">
+                    <label for="search">Search by name, member or location</label>
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            placeholder="Artist, member, location…"
+                            value="{{.Filters.Search}}"
+                            list="search-suggestions"
+                            autocomplete="off"
+                        >
+                        <!-- Native HTML datalist: zero JS required -->
+                        <datalist id="search-suggestions">
+                            {{range .Suggestions}}
+                                <option value="{{.Value}}" label="{{.Label}}">{{.Value}} — {{.Label}}</option>
+                            {{end}}
+                        </datalist>
+                    </div>
                 </div>
 
+                <!-- FIRST ALBUM DATE -->
                 <div class="filter-group">
                     <label for="first-album">First album date</label>
                     <input
@@ -44,6 +54,7 @@
                     >
                 </div>
 
+                <!-- CREATION YEAR -->
                 <div class="filter-group">
                     <div class="creation-year-header">
                         <label for="creation-year">Creation year</label>
@@ -60,46 +71,25 @@
                     >
                 </div>
 
+                <!-- MEMBERS -->
                 <fieldset class="filter-group">
                     <legend>Number of members</legend>
-                    <label>
-                        <input type="radio" name="members" value="1" {{if eq .Filters.Members "1"}}checked{{end}}>
-                        1
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="2" {{if eq .Filters.Members "2"}}checked{{end}}>
-                        2
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="3" {{if eq .Filters.Members "3"}}checked{{end}}>
-                        3
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="4" {{if eq .Filters.Members "4"}}checked{{end}}>
-                        4
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="5" {{if eq .Filters.Members "5"}}checked{{end}}>
-                        5
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="6" {{if eq .Filters.Members "6"}}checked{{end}}>
-                        6
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="7" {{if eq .Filters.Members "7"}}checked{{end}}>
-                        7
-                    </label>
-                    <label>
-                        <input type="radio" name="members" value="8" {{if eq .Filters.Members "8"}}checked{{end}}>
-                        8+
-                    </label>
+                    <label><input type="radio" name="members" value="1" {{if eq .Filters.Members "1"}}checked{{end}}>1</label>
+                    <label><input type="radio" name="members" value="2" {{if eq .Filters.Members "2"}}checked{{end}}>2</label>
+                    <label><input type="radio" name="members" value="3" {{if eq .Filters.Members "3"}}checked{{end}}>3</label>
+                    <label><input type="radio" name="members" value="4" {{if eq .Filters.Members "4"}}checked{{end}}>4</label>
+                    <label><input type="radio" name="members" value="5" {{if eq .Filters.Members "5"}}checked{{end}}>5</label>
+                    <label><input type="radio" name="members" value="6" {{if eq .Filters.Members "6"}}checked{{end}}>6</label>
+                    <label><input type="radio" name="members" value="7" {{if eq .Filters.Members "7"}}checked{{end}}>7</label>
+                    <label><input type="radio" name="members" value="8" {{if eq .Filters.Members "8"}}checked{{end}}>8+</label>
                 </fieldset>
 
+                <!-- ACTIONS -->
                 <div class="filter-actions">
                     <button type="submit">Filter</button>
                     <a href="/">Reset</a>
                 </div>
+
             </form>
         </section>
 
@@ -108,12 +98,10 @@
                 <a href="/artist?id={{.ID}}">
                     <div class="card">
                         <div class="card-header">
-                            <img src="{{.Image}}" alt="">
+                            <img src="{{.Image}}" alt="{{.Name}}">
                         </div>
                         <div class="card-body">
-                            <p> <span>{{.ID}}</span>{{.Name}}</p>
-
-
+                            <p><span>{{.ID}}</span>{{.Name}}</p>
                         </div>
                     </div>
                 </a>
@@ -121,10 +109,7 @@
         </div>
     </main>
 
-    <footer>   
-
-
-    </footer>
+    <footer></footer>
 
 </body>
 </html>
