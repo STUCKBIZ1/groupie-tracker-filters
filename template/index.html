@@ -29,61 +29,9 @@
                             type="text"
                             id="search"
                             name="search"
-                            placeholder="Artist, member, location…"
-                            value="{{.Filters.Search}}"
-                            list="search-suggestions"
-                            autocomplete="off"
                         >
-                        <!-- Native HTML datalist: zero JS required -->
-                        <datalist id="search-suggestions">
-                            {{range .Suggestions}}
-                                <option value="{{.Value}}" label="{{.Label}}">{{.Value}} — {{.Label}}</option>
-                            {{end}}
-                        </datalist>
                     </div>
                 </div>
-
-                <!-- FIRST ALBUM DATE -->
-                <div class="filter-group">
-                    <label for="first-album">First album date</label>
-                    <input
-                        type="date"
-                        id="first-album"
-                        name="first_album"
-                        value="{{.Filters.FirstAlbum}}"
-                    >
-                </div>
-
-                <!-- CREATION YEAR -->
-                <div class="filter-group">
-                    <div class="creation-year-header">
-                        <label for="creation-year">Creation year</label>
-                        <output class="range-value" id="creation-year-value">{{if .Filters.CreationYear}}{{.Filters.CreationYear}}{{else}}1960{{end}}</output>
-                    </div>
-                    <input
-                        type="range"
-                        id="creation-year"
-                        name="creation_year"
-                        min="1950"
-                        max="2026"
-                        value="{{if .Filters.CreationYear}}{{.Filters.CreationYear}}{{else}}1960{{end}}"
-                        oninput="document.getElementById('creation-year-value').value = this.value"
-                    >
-                </div>
-
-                <!-- MEMBERS -->
-                <fieldset class="filter-group">
-                    <legend>Number of members</legend>
-                    <label><input type="radio" name="members" value="1" {{if eq .Filters.Members "1"}}checked{{end}}>1</label>
-                    <label><input type="radio" name="members" value="2" {{if eq .Filters.Members "2"}}checked{{end}}>2</label>
-                    <label><input type="radio" name="members" value="3" {{if eq .Filters.Members "3"}}checked{{end}}>3</label>
-                    <label><input type="radio" name="members" value="4" {{if eq .Filters.Members "4"}}checked{{end}}>4</label>
-                    <label><input type="radio" name="members" value="5" {{if eq .Filters.Members "5"}}checked{{end}}>5</label>
-                    <label><input type="radio" name="members" value="6" {{if eq .Filters.Members "6"}}checked{{end}}>6</label>
-                    <label><input type="radio" name="members" value="7" {{if eq .Filters.Members "7"}}checked{{end}}>7</label>
-                    <label><input type="radio" name="members" value="8" {{if eq .Filters.Members "8"}}checked{{end}}>8+</label>
-                </fieldset>
-
                 <!-- ACTIONS -->
                 <div class="filter-actions">
                     <button type="submit">Filter</button>
@@ -94,7 +42,7 @@
         </section>
 
         <div class="container">
-            {{range .Artists}}
+            {{range .}}
                 <a href="/artist?id={{.ID}}">
                     <div class="card">
                         <div class="card-header">
