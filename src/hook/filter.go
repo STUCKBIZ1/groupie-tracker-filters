@@ -1,9 +1,7 @@
 package hook
 
 import (
-	"strconv"
 	"strings"
-	"time"
 
 	model "gr-tr/src/models"
 )
@@ -15,20 +13,14 @@ type Filters struct {
 	Members      string
 }
 
-func FilterArtists(artists []model.Artist, filters Filters) []model.Artist {
+func SearchArtists(artists []model.Artist, search string) []model.Artist {
+	if search == ""{
+		return artists
+	}
 	filtered := make([]model.Artist, 0, len(artists))
 
 	for _, artist := range artists {
-		if !matchSearch(artist, filters.Search) {
-			continue
-		}
-		if !matchFirstAlbum(artist.FirstAlbum, filters.FirstAlbum) {
-			continue
-		}
-		if !matchCreationYear(artist.CreationDate, filters.CreationYear) {
-			continue
-		}
-		if !matchMembers(len(artist.Members), filters.Members) {
+		if !matchSearch(artist, search) {
 			continue
 		}
 
@@ -47,7 +39,17 @@ func matchSearch(artist model.Artist, search string) bool {
 	if strings.Contains(strings.ToLower(artist.Name), search) {
 		return true
 	}
-
+	if strings.Contains(artist.FirstAlbum, search) {
+		return true
+	}
+	if strings.Contains(artist.ConcertDates, search) {
+		return true
+	}
+	for _, v := range artist.Members {
+		if strings.Contains(strings.ToLower(v), search) {
+			return true
+		}
+	}
 	var locations model.Locations
 	if err := ApiCall(artist.Locations, &locations); err != nil {
 		return false
@@ -61,49 +63,4 @@ func matchSearch(artist model.Artist, search string) bool {
 	}
 
 	return false
-}
-
-func matchFirstAlbum(firstAlbum string, selected string) bool {
-	selected = strings.TrimSpace(selected)
-	if selected == "" {
-		return true
-	}
-
-	parsedDate, err := time.Parse("2006-01-02", selected)
-	if err != nil {
-		return true
-	}
-
-	return firstAlbum == parsedDate.Format("02-01-2006")
-}
-
-func matchCreationYear(creationDate int, selected string) bool {
-	selected = strings.TrimSpace(selected)
-	if selected == "" {
-		return true
-	}
-
-	selectedYear, err := strconv.Atoi(selected)
-	if err != nil {
-		return true
-	}
-
-	return creationDate >= selectedYear
-}
-
-func matchMembers(memberCount int, selected string) bool {
-	selected = strings.TrimSpace(selected)
-	if selected == "" {
-		return true
-	}
-
-	if selected == "8" {
-		return memberCount >= 8
-	}
-
-	return selected == intToString(memberCount)
-}
-
-func intToString(value int) string {
-	return strconv.Itoa(value)
 }

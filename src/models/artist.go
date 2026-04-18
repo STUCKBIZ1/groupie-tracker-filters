@@ -11,3 +11,7 @@ type Artist struct {
 	ConcertDates string   `json:"concertDates"`
 	Relations    string   `json:"relations"`
 }
+type AS struct{
+	Artists []Artist
+	Suggestion []string
+}
