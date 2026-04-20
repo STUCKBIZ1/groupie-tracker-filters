@@ -1,6 +1,7 @@
 package hook
 
 import (
+	"strconv"
 	"strings"
 
 	model "gr-tr/src/models"
@@ -17,17 +18,17 @@ func SearchArtists(artists []model.Artist, search string) []model.Artist {
 	if search == ""{
 		return artists
 	}
-	filtered := make([]model.Artist, 0, len(artists))
+	seached := make([]model.Artist, 0, len(artists))
 
 	for _, artist := range artists {
 		if !matchSearch(artist, search) {
 			continue
 		}
 
-		filtered = append(filtered, artist)
+		seached = append(seached, artist)
 	}
 
-	return filtered
+	return seached
 }
 
 func matchSearch(artist model.Artist, search string) bool {
@@ -42,7 +43,7 @@ func matchSearch(artist model.Artist, search string) bool {
 	if strings.Contains(artist.FirstAlbum, search) {
 		return true
 	}
-	if strings.Contains(artist.ConcertDates, search) {
+	if strings.Contains(strconv.Itoa(artist.CreationDate), search) {
 		return true
 	}
 	for _, v := range artist.Members {
@@ -56,8 +57,9 @@ func matchSearch(artist model.Artist, search string) bool {
 	}
 
 	for _, location := range locations.Locations {
-		normalized := strings.ToLower(strings.ReplaceAll(location, "_", " "))
-		if strings.Contains(normalized, search) {
+		normalized := strings.ToLower(location)
+		search = strings.ReplaceAll(search, ", ", " ")
+		if strings.Contains(normalized, strings.ReplaceAll(search, " ", "_")){
 			return true
 		}
 	}

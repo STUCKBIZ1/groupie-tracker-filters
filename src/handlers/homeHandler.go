@@ -16,7 +16,7 @@ const ARTIST_URL = "https://groupietrackers.herokuapp.com/api/artists"
 var suggestions []string
 
 func Suggestion(artists []model.Artist) []string {
-	var locations model.Locations
+	var d_lacations model.Locations
 	var suggestions []string
 
 	for _, artist := range artists {
@@ -26,8 +26,8 @@ func Suggestion(artists []model.Artist) []string {
 		}
 		suggestions = append(suggestions, artist.FirstAlbum)
 		suggestions = append(suggestions, strconv.Itoa(artist.CreationDate))
-		hook.ApiCall(artist.Locations, locations)
-		for _, v := range locations.Locations {
+		hook.ApiCall(artist.Locations, &d_lacations)
+		for _, v := range d_lacations.Locations {
 			suggestions = append(suggestions, v)
 		}
 	}
