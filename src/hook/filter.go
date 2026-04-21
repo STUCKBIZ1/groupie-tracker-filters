@@ -58,7 +58,7 @@ func matchSearch(artist model.Artist, search string) bool {
 
 	for _, location := range locations.Locations {
 		normalized := strings.ToLower(location)
-		search = strings.ReplaceAll(search, ", ", " ")
+		search = strings.ReplaceAll(search, ", ", "-")
 		if strings.Contains(normalized, strings.ReplaceAll(search, " ", "_")){
 			return true
 		}

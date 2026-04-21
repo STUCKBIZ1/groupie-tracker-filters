@@ -18,8 +18,6 @@ func ErrorHandler(
 	title string,
 	msg string,
 ) {
-	w.WriteHeader(status)
-
 	data := T_Error{
 		Title:       title,
 		StatusError: status,
@@ -32,9 +30,10 @@ func ErrorHandler(
 		return
 	}
 
+	w.WriteHeader(status)
+
 	err = tmpl.Execute(w, data)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 }
